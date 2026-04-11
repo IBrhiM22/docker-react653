@@ -16,8 +16,7 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Docker Image
-        run: docker build -t IBrhiM22/docker-react -f Dockerfile.dev .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/docker-react -f Dockerfile.dev .
 
       - name: Run Tests
-        run: docker run -e CI=true IBrhiM22/docker-react npm run test
-        #aa
+        run: docker run -e CI=true ${{ secrets.DOCKER_USERNAME }}/docker-react npm run test
