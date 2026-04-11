@@ -8,11 +8,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
 
-      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Docker Login
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - run: docker build -t ahmedgamil/docker-react -f Dockerfile.dev .
+      - name: Build Docker Image
+        run: docker build -t IBrhiM22/docker-react -f Dockerfile.dev .
 
-      - run: docker run -e CI=true ahmedgamil/docker-react npm run test
+      - name: Run Tests
+        run: docker run -e CI=true IBrhiM22/docker-react npm run test
